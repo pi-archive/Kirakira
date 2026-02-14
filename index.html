@@ -17,7 +17,6 @@
             appId: "1:98777050685:web:c02c15228f2780d6a40454",
             measurementId: "G-NFW7WFNEH0"
         };
-
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
         window.fb = { db, ref, set, get, child, update };
@@ -32,22 +31,21 @@
         /* [1. 표지] */
         #entry-screen { position: fixed; inset: 0; background: #fdf2f5; z-index: 2000; display: flex; align-items: center; justify-content: center; }
         .analog-cover { width: 340px; height: 500px; background: #ff69b4; border-radius: 15px 40px 40px 15px; box-shadow: 15px 15px 0px rgba(0,0,0,0.1), inset -10px 0 20px rgba(0,0,0,0.2); position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 5px solid #fff; }
-        .analog-cover::before { content: ''; position: absolute; left: 20px; top: 0; bottom: 0; width: 2px; background: rgba(255,255,255,0.3); }
         .sticker { position: absolute; background: white; padding: 5px 10px; transform: rotate(-5deg); font-weight: bold; color: var(--hot-pink); box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
         .heart-btn { font-size: 60px; cursor: pointer; transition: 0.3s; animation: beat 1.5s infinite; }
         @keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
         .lock-input { width: 140px; padding: 10px; border-radius: 20px; border: none; text-align: center; margin-top: 15px; outline: none; display: none; background: rgba(255,255,255,0.9); color: var(--hot-pink); font-family: 'Gaegu'; font-size: 18px; }
 
         /* [2. 갸루 데코 전단지] */
-        #flyer-main { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); width: 330px; height: 500px; background: #fff; border: 4px solid var(--hot-pink); z-index: 3000; transition: 0.4s; border-radius: 10px; box-shadow: 20px 20px 0px rgba(255,105,180,0.3); overflow: hidden; }
+        #flyer-main { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); width: 330px; height: 520px; background: #fff; border: 4px solid var(--hot-pink); z-index: 3000; transition: 0.4s; border-radius: 10px; box-shadow: 20px 20px 0px rgba(255,105,180,0.3); overflow: hidden; cursor: pointer; }
         #flyer-main.active { transform: translate(-50%, -50%) scale(1) rotate(-2deg); }
         .flyer-content { position: relative; width: 100%; height: 100%; padding: 20px; box-sizing: border-box; background-image: radial-gradient(#ffe4e1 1px, transparent 1px); background-size: 20px 20px; }
-        .deco-txt { position: absolute; font-weight: bold; white-space: nowrap; line-height: 1; }
-        .flyer-title { font-size: 32px; color: var(--hot-pink); text-align: center; margin-bottom: 20px; text-shadow: 2px 2px 0 #fff, 4px 4px 0 var(--neon-blue); transform: rotate(-2deg); }
-        .menu-list { background: rgba(255,255,255,0.8); border: 2px dashed var(--hot-pink); padding: 15px; border-radius: 10px; margin-top: 30px; z-index: 10; position: relative; }
-        .menu-item { font-size: 20px; margin-bottom: 10px; display: flex; justify-content: space-between; }
+        .deco-txt { position: absolute; font-weight: bold; white-space: nowrap; }
+        .flyer-title { font-size: 38px; color: var(--hot-pink); text-align: center; text-shadow: 2px 2px 0 #fff, 4px 4px 0 var(--neon-blue); transform: rotate(-3deg); margin-top: 20px; }
+        .menu-list { background: rgba(255,255,255,0.8); border: 2px dashed var(--hot-pink); padding: 15px; border-radius: 10px; margin-top: 40px; position: relative; z-index: 5; }
+        .menu-item { font-size: 22px; margin-bottom: 12px; display: flex; justify-content: space-between; color: #333; }
 
-        /* [3. 다이어리] */
+        /* [3. 다이어리 기본 구조] */
         .diary-wrapper { display: none; width: 95vw; max-width: 1000px; height: 750px; background: #fff; border-radius: 30px; border: 10px solid var(--baby-pink); position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.1); box-sizing: border-box; }
         .inner-book { display: flex; width: 100%; height: 100%; position: relative; overflow: hidden; }
         .spine { position: absolute; left: 50%; top: 0; bottom: 0; width: 40px; transform: translateX(-50%); background: linear-gradient(90deg, #e0e0e0, #fff 50%, #e0e0e0); z-index: 100; display: flex; flex-direction: column; justify-content: space-around; align-items: center; }
@@ -59,13 +57,14 @@
         .btn:active { transform: translateY(2px); box-shadow: none; }
         .input-style { border: 2px solid var(--baby-pink); border-radius: 10px; padding: 8px; font-family: 'Gaegu'; width: 100%; box-sizing: border-box; outline: none; }
 
+        /* 기능별 스타일 */
         .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
-        .cal-day { aspect-ratio: 1/1; background: var(--soft-pink); border-radius: 5px; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; font-size: 13px; }
+        .cal-day { aspect-ratio: 1/1; background: var(--soft-pink); border-radius: 5px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 13px; position: relative; }
         .cal-day.today { background: var(--hot-pink); color: white; }
         .cal-dot { position: absolute; bottom: 2px; width: 5px; height: 5px; background: red; border-radius: 50%; }
         .omu-plate { width: 280px; height: 160px; background: #fff; border-radius: 100%; margin: 0 auto; display: flex; align-items: center; justify-content: center; border: 2px solid #eee; }
         .omu-egg { width: 240px; height: 120px; background: var(--egg-yellow); border-radius: 120px 120px 100px 100px; position: relative; overflow: hidden; cursor: crosshair; }
-        .post-it { position: absolute; width: 90px; height: 90px; background: #fff5ba; padding: 10px; box-shadow: 3px 3px 10px rgba(0,0,0,0.1); cursor: move; z-index: 50; transform: rotate(2deg); user-select: none; }
+        .post-it { position: absolute; width: 90px; height: 90px; background: #fff5ba; padding: 10px; box-shadow: 3px 3px 10px rgba(0,0,0,0.1); cursor: move; z-index: 50; transform: rotate(2deg); user-select: none; font-size: 14px; }
         .tabs { position: absolute; right: -50px; top: 80px; display: flex; flex-direction: column; gap: 8px; }
         .tab { background: #fff; color: var(--hot-pink); padding: 15px 8px; border-radius: 0 10px 10px 0; writing-mode: vertical-rl; cursor: pointer; border: 2px solid var(--baby-pink); border-left: none; font-size: 0.9rem; }
     </style>
@@ -77,10 +76,27 @@
             <div class="sticker" style="top:20px; left:-10px;">kirakira</div>
             <div class="sticker" style="bottom:40px; right:-10px; transform:rotate(10deg);">TOP SECRET</div>
             <h1 style="color:white; font-size: 2.2rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">창원이의 비밀 일기</h1>
-            <div class="pw-container" style="text-align:center;">
+            <div class="pw-container">
                 <div class="heart-btn" onclick="document.getElementById('cover-pw').style.display='block'">💖</div>
                 <input type="password" id="cover-pw" class="lock-input" placeholder="Password?">
             </div>
+        </div>
+    </div>
+
+    <div id="flyer-main" onclick="this.classList.remove('active')">
+        <div class="flyer-content">
+            <div class="deco-txt" style="top:10px; left:10px; color:var(--neon-blue); font-size:20px; transform:rotate(-15deg);">KIRA KIRA!</div>
+            <div class="deco-txt" style="top:15px; right:15px; color:var(--neon-purple); font-size:18px; transform:rotate(10deg);">귀여움 주의🚨</div>
+            <div class="flyer-title">Mika's Cafe!</div>
+            <div class="menu-list">
+                <div class="menu-item"><span>🍳 오므라이스</span><span>1.5</span></div>
+                <div class="menu-item"><span>☕ 퐁당 라떼</span><span>0.8</span></div>
+                <div class="menu-item"><span>📸 갸루 체키</span><span>1.2</span></div>
+            </div>
+            <div class="deco-txt" style="bottom:70px; left:20px; color:#ff1493; font-size:24px; transform:rotate(-5deg);">MOE MOE KYUN~!</div>
+            <div class="deco-txt" style="bottom:30px; right:10px; color:var(--egg-yellow); font-size:45px;">🍓🍰</div>
+            <div class="deco-txt" style="top:100px; left:5px; color:red; font-size:14px; font-weight:bold;">#창원이가_직접_그림</div>
+            <p style="text-align:center; color:var(--hot-pink); font-weight:bold; margin-top:30px; font-size:18px;">손님이 늦으면 창원이가 다 먹음!!</p>
         </div>
     </div>
 
@@ -109,31 +125,21 @@
             </div>
             <div class="page page-right" id="content-view"></div>
         </div>
+        <div class="tabs">
+            <div class="tab" onclick="renderHome()">🏠 Home</div>
+            <div class="tab" onclick="tpl('diary')">📝 Diary</div>
+            <div class="tab" onclick="tpl('cal')">📅 Cal</div>
+            <div class="tab" onclick="tpl('friends')">👫 Friends</div>
+            <div class="tab" onclick="tpl('recipe')">👩‍🍳 Recipe</div>
+            <div class="tab" onclick="tpl('omu')">🍛 Omu</div>
         </div>
-
-    <div id="flyer-main" onclick="this.classList.remove('active')">
-        <div class="flyer-content">
-            <div class="flyer-title">New Menu!</div>
-            <div class="menu-list">
-                <div class="menu-item"><span>🍳 오므라이스</span><span>1.5</span></div>
-                <div class="menu-item"><span>☕ 퐁당 라떼</span><span>0.8</span></div>
-                <div class="menu-item"><span>📸 갸루 체키</span><span>1.2</span></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="tabs">
-        <div class="tab" onclick="renderHome()">🏠 Home</div>
-        <div class="tab" onclick="tpl('diary')">📝 Diary</div>
-        <div class="tab" onclick="tpl('cal')">📅 Cal</div>
-        <div class="tab" onclick="tpl('friends')">👫 Friends</div>
-        <div class="tab" onclick="tpl('recipe')">👩‍🍳 Recipe</div>
-        <div class="tab" onclick="tpl('omu')">🍛 Omu</div>
     </div>
 
     <script>
         const dbRef = (path) => fb.ref(fb.db, path);
+        let selD = new Date().getDate();
 
+        // 암호 입력 (0513)
         document.getElementById('cover-pw').addEventListener('keypress', async (e) => {
             if(e.key === 'Enter' && e.target.value === '0513') {
                 document.getElementById('entry-screen').style.display = 'none';
@@ -143,6 +149,7 @@
             }
         });
 
+        // 데이터 로드
         async function loadCloudData() {
             const snap = await fb.get(dbRef('/'));
             if(snap.exists()){
@@ -150,21 +157,16 @@
                 if(d.profile) {
                     document.getElementById('n-disp').innerText = d.profile.name || "창원";
                     document.getElementById('m-disp').innerText = d.profile.msg || "오늘도 평화로운 하루~ ✨";
-                    // 서버에 이미지가 있으면 서버 이미지 사용, 없으면 profile.png 유지
-                    if(d.profile.img) {
-                        document.getElementById('pf-img').src = d.profile.img;
-                    }
+                    if(d.profile.img) document.getElementById('pf-img').src = d.profile.img;
                 }
                 if(d.layout) {
                     document.querySelectorAll('.post-it').forEach(e => e.remove());
-                    d.layout.forEach(p => {
-                        const el = createPostItElement(p.v, p.t, p.l);
-                        document.querySelector('.inner-book').appendChild(el);
-                    });
+                    d.layout.forEach(p => document.querySelector('.inner-book').appendChild(createPostItElement(p.v, p.t, p.l)));
                 }
             }
         }
 
+        // 프로필 수정
         async function togglePf() {
             const isEdit = document.getElementById('pf-btn').innerText === "수정";
             document.getElementById('n-disp').style.display = isEdit ? 'none' : 'block';
@@ -190,13 +192,74 @@
             r.readAsDataURL(e.target.files[0]);
         }
 
-        // [나머지 함수들은 이전 코드와 동일하게 추가하면 됩니다]
         function renderHome() {
             document.getElementById('content-view').innerHTML = `<div class="title">My Secret Log 💖</div><div style="text-align:center; padding-top:100px;"><div style="font-size:80px;">📔</div><p style="font-size:1.3rem; color:var(--hot-pink);">창원이의 비밀 일기장...<br>절대 보지 마!</p></div>`;
         }
-        
-        // ... (tpl, saveD, renderCal, saveEv, addF, renderFriends, initOmu, saveOmu, createPostItElement 등 나머지 로직 생략)
-        // 위에서 제공된 이전 전체 코드의 나머지 부분을 그대로 붙여넣으시면 됩니다.
+
+        // 템플릿 전환
+        async function tpl(type) {
+            const v = document.getElementById('content-view');
+            v.innerHTML = `<div class="title">${type.toUpperCase()}</div>`;
+            
+            if(type === 'diary') {
+                const snap = await fb.get(dbRef('diary'));
+                v.innerHTML += `<textarea id="d-txt" class="input-style" style="height:420px; line-height:2.2; background: repeating-linear-gradient(#fff, #fff 31px, #f9f9f9 31px, #f9f9f9 32px);">${snap.exists()?snap.val():""}</textarea><button class="btn" style="width:100%; margin-top:15px;" onclick="saveD()">서버에 저장 ✨</button>`;
+            } else if(type === 'cal') {
+                v.innerHTML += `<div class="cal-grid" id="cal-area"></div><div style="margin-top:20px; padding:15px; border:1px solid var(--baby-pink); border-radius:15px;"><b id="cal-lbl">${selD}일 일정</b><input id="ev-t" class="input-style" style="margin:8px 0;" placeholder="할 일 제목"><textarea id="ev-m" class="input-style" style="height:50px;" placeholder="상세 내용"></textarea><button class="btn" style="width:100%; margin-top:8px;" onclick="saveEv()">일정 저장</button></div>`;
+                renderCal();
+            } else if(type === 'friends') {
+                v.innerHTML += `<div id="f-list" style="max-height:350px; overflow-y:auto;"></div><div style="display:flex; gap:10px; margin-top:15px;"><input id="f-in" class="input-style" placeholder="이름"><button class="btn" onclick="addF()">등록</button></div>`;
+                renderFriends();
+            } else if(type === 'recipe') {
+                const snap = await fb.get(dbRef('recipe'));
+                const r = snap.exists() ? snap.val() : {n:"", i:"", m:""};
+                v.innerHTML += `<div style="padding:15px; border:2px dashed var(--hot-pink); border-radius:15px; background:var(--soft-pink);">메뉴: <input class="input-style" id="rc-n" value="${r.n}">재료: <textarea id="rc-i" class="input-style">${r.i}</textarea>방법: <textarea id="rc-m" class="input-style" style="height:100px;">${r.m}</textarea><button class="btn" style="width:100%; margin-top:10px;" onclick="saveRecipe()">레시피 저장</button></div>`;
+            } else if(type === 'omu') {
+                v.innerHTML += `<div class="omu-plate"><div class="omu-egg"><canvas id="omu-canvas" width="240" height="120"></canvas></div></div><div style="display:flex; gap:10px; margin-top:15px;"><button class="btn" style="flex:1; background:#fff; color:red; border:1px solid red;" onclick="initOmu()">지우기</button><button class="btn" style="flex:1;" onclick="saveOmu()">케첩 저장</button></div><div id="omu-gal" style="display:grid; grid-template-columns:repeat(3,1fr); gap:5px; margin-top:15px;"></div>`;
+                initOmu(); renderOmuGal();
+            }
+        }
+
+        // [기능 함수들]
+        async function saveD() { await fb.set(dbRef('diary'), document.getElementById('d-txt').value); alert("저장됨!"); }
+        async function saveRecipe() { await fb.set(dbRef('recipe'), { n:document.getElementById('rc-n').value, i:document.getElementById('rc-i').value, m:document.getElementById('rc-m').value }); alert("레시피 저장!"); }
+
+        async function renderCal() {
+            const a = document.getElementById('cal-area'); a.innerHTML = '';
+            const snap = await fb.get(dbRef('calendar'));
+            const data = snap.exists() ? snap.val() : {};
+            for(let i=1; i<=31; i++) a.innerHTML += `<div class="cal-day ${i==selD?'today':''}" onclick="selDay(${i})">${i}${data[i]?'<div class="cal-dot"></div>':''}</div>`;
+        }
+        async function selDay(d) { selD = d; renderCal(); const snap = await fb.get(dbRef(`calendar/${d}`)); const ev = snap.exists() ? snap.val() : {t:"", m:""}; document.getElementById('cal-lbl').innerText = d+"일 일정"; document.getElementById('ev-t').value = ev.t; document.getElementById('ev-m').value = ev.m; }
+        async function saveEv() { await fb.set(dbRef(`calendar/${selD}`), { t:document.getElementById('ev-t').value, m:document.getElementById('ev-m').value }); renderCal(); alert("일정 저장!"); }
+
+        async function addF() { const n = document.getElementById('f-in').value; if(!n) return; const snap = await fb.get(dbRef('friends')); const fs = snap.exists() ? snap.val() : []; fs.push({n, c:0}); await fb.set(dbRef('friends'), fs); renderFriends(); document.getElementById('f-in').value=''; }
+        async function renderFriends() { const l = document.getElementById('f-list'); const snap = await fb.get(dbRef('friends')); const fs = snap.exists() ? snap.val() : []; l.innerHTML = fs.map((f, i) => `<div style="display:flex; justify-content:space-between; background:var(--soft-pink); padding:10px; border-radius:12px; margin-bottom:8px;"><b>${f.n}</b> <span style="color:var(--hot-pink); cursor:pointer;" onclick="tally(${i})">${"正".repeat(Math.floor(f.c/5))}${["","一","丅","上","止"][f.c%5]}</span> <span onclick="delF(${i})">🗑️</span></div>`).join(''); }
+        async function tally(i) { const snap = await fb.get(dbRef('friends')); const fs = snap.val(); fs[i].c++; await fb.set(dbRef('friends'), fs); renderFriends(); }
+        async function delF(i) { const snap = await fb.get(dbRef('friends')); const fs = snap.val(); fs.splice(i,1); await fb.set(dbRef('friends'), fs); renderFriends(); }
+
+        function initOmu() {
+            const c = document.getElementById('omu-canvas'); const ctx = c.getContext('2d'); ctx.strokeStyle = 'red'; ctx.lineWidth = 5; ctx.lineCap = 'round';
+            let dr = false; const getPos = (e) => { const rect = c.getBoundingClientRect(); return [e.clientX - rect.left, e.clientY - rect.top]; };
+            c.onpointerdown = (e) => { dr=true; const [x,y] = getPos(e); ctx.beginPath(); ctx.moveTo(x,y); };
+            c.onpointermove = (e) => { if(dr) { const [x,y] = getPos(e); ctx.lineTo(x,y); ctx.stroke(); } };
+            c.onpointerup = () => dr=false;
+        }
+        async function saveOmu() { const u = document.getElementById('omu-canvas').toDataURL(); const snap = await fb.get(dbRef('omu_gallery')); const g = snap.exists() ? snap.val() : []; g.unshift(u); await fb.set(dbRef('omu_gallery'), g.slice(0,6)); renderOmuGal(); }
+        async function renderOmuGal() { const snap = await fb.get(dbRef('omu_gallery')); const g = snap.exists() ? snap.val() : []; document.getElementById('omu-gal').innerHTML = g.map(s => `<img src="${s}" style="width:100%; background:var(--egg-yellow); border-radius:5px;">`).join(''); }
+
+        function createPostItElement(val, top, left) {
+            const p = document.createElement('div'); p.className = 'post-it'; p.contentEditable = true; p.innerText = val || "메모!";
+            p.style.top = top || "100px"; p.style.left = left || "30px";
+            p.onpointerdown = (e) => {
+                let px = e.clientX, py = e.clientY;
+                const move = (ev) => { p.style.left = (p.offsetLeft + (ev.clientX - px)) + "px"; p.style.top = (p.offsetTop + (ev.clientY - py)) + "px"; px = ev.clientX; py = ev.clientY; };
+                document.onpointermove = move; document.onpointerup = () => document.onpointermove = null;
+            };
+            return p;
+        }
+        function addPostIt() { document.querySelector('.inner-book').appendChild(createPostItElement()); }
+        async function saveLayout() { const ds = []; document.querySelectorAll('.post-it').forEach(el => ds.push({ v: el.innerText, t: el.style.top, l: el.style.left })); await fb.set(dbRef('layout'), ds); alert("배치 저장!"); }
     </script>
 </body>
 </html>
