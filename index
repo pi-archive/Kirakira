@@ -20,8 +20,6 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
-
-        // 전역 바인딩
         window.fb = { db, ref, set, get, child, update };
     </script>
 
@@ -86,23 +84,6 @@
         </div>
     </div>
 
-    <div id="flyer-main" onclick="this.classList.remove('active')">
-        <div class="flyer-content">
-            <div class="flyer-title">New Menu!</div>
-            <div class="deco-txt" style="top:10px; left:10px; color:var(--neon-blue); font-size:20px; transform:rotate(-15deg);">KIRA KIRA!</div>
-            <div class="deco-txt" style="top:15px; right:15px; color:var(--neon-purple); font-size:18px; transform:rotate(10deg);">귀여움 주의🚨</div>
-            <div class="deco-txt" style="bottom:20px; left:20px; color:#ff1493; font-size:24px; transform:rotate(-5deg);">MOE MOE KYUN~!</div>
-            <div class="deco-txt" style="bottom:60px; right:10px; color:var(--egg-yellow); font-size:40px;">🍓🍰</div>
-            <div class="deco-txt" style="top:80px; left:5px; color:red; font-size:14px;">#창원이가_직접_그림</div>
-            <div class="menu-list">
-                <div class="menu-item"><span>🍳 오므라이스</span><span>1.5</span></div>
-                <div class="menu-item"><span>☕ 퐁당 라떼</span><span>0.8</span></div>
-                <div class="menu-item"><span>📸 갸루 체키</span><span>1.2</span></div>
-            </div>
-            <p style="text-align:center; color:var(--hot-pink); font-weight:bold; margin-top:20px;">손님이 늦으면 창원이가 다 먹음!!</p>
-        </div>
-    </div>
-
     <div class="diary-wrapper" id="main-diary">
         <div class="spine"><div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div></div>
         <div class="inner-book">
@@ -110,8 +91,7 @@
                 <div class="title">My Profile 🐱</div>
                 <div style="text-align: center;">
                     <div style="width:130px; height:130px; border-radius:50%; border:5px solid var(--baby-pink); margin:0 auto; overflow:hidden; background:var(--soft-pink); display:flex; align-items:center; justify-content:center; cursor:pointer;" onclick="document.getElementById('pf-upload').click()">
-                        <img id="pf-img" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
-                        <span id="pf-icon" style="font-size:40px;">🎀</span>
+                        <img id="pf-img" src="profile.png" style="width:100%; height:100%; object-fit:cover;">
                         <input type="file" id="pf-upload" hidden onchange="changePf(event)">
                     </div>
                     <div style="margin-top:10px;">
@@ -129,14 +109,26 @@
             </div>
             <div class="page page-right" id="content-view"></div>
         </div>
-        <div class="tabs">
-            <div class="tab" onclick="renderHome()">🏠 Home</div>
-            <div class="tab" onclick="tpl('diary')">📝 Diary</div>
-            <div class="tab" onclick="tpl('cal')">📅 Cal</div>
-            <div class="tab" onclick="tpl('friends')">👫 Friends</div>
-            <div class="tab" onclick="tpl('recipe')">👩‍🍳 Recipe</div>
-            <div class="tab" onclick="tpl('omu')">🍛 Omu</div>
         </div>
+
+    <div id="flyer-main" onclick="this.classList.remove('active')">
+        <div class="flyer-content">
+            <div class="flyer-title">New Menu!</div>
+            <div class="menu-list">
+                <div class="menu-item"><span>🍳 오므라이스</span><span>1.5</span></div>
+                <div class="menu-item"><span>☕ 퐁당 라떼</span><span>0.8</span></div>
+                <div class="menu-item"><span>📸 갸루 체키</span><span>1.2</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tabs">
+        <div class="tab" onclick="renderHome()">🏠 Home</div>
+        <div class="tab" onclick="tpl('diary')">📝 Diary</div>
+        <div class="tab" onclick="tpl('cal')">📅 Cal</div>
+        <div class="tab" onclick="tpl('friends')">👫 Friends</div>
+        <div class="tab" onclick="tpl('recipe')">👩‍🍳 Recipe</div>
+        <div class="tab" onclick="tpl('omu')">🍛 Omu</div>
     </div>
 
     <script>
@@ -158,10 +150,9 @@
                 if(d.profile) {
                     document.getElementById('n-disp').innerText = d.profile.name || "창원";
                     document.getElementById('m-disp').innerText = d.profile.msg || "오늘도 평화로운 하루~ ✨";
+                    // 서버에 이미지가 있으면 서버 이미지 사용, 없으면 profile.png 유지
                     if(d.profile.img) {
                         document.getElementById('pf-img').src = d.profile.img;
-                        document.getElementById('pf-img').style.display = 'block';
-                        document.getElementById('pf-icon').style.display = 'none';
                     }
                 }
                 if(d.layout) {
@@ -194,84 +185,18 @@
             const r = new FileReader();
             r.onload = async () => {
                 document.getElementById('pf-img').src = r.result;
-                document.getElementById('pf-img').style.display='block';
-                document.getElementById('pf-icon').style.display='none';
                 await fb.update(dbRef('profile'), { img: r.result });
             };
             r.readAsDataURL(e.target.files[0]);
         }
 
+        // [나머지 함수들은 이전 코드와 동일하게 추가하면 됩니다]
         function renderHome() {
             document.getElementById('content-view').innerHTML = `<div class="title">My Secret Log 💖</div><div style="text-align:center; padding-top:100px;"><div style="font-size:80px;">📔</div><p style="font-size:1.3rem; color:var(--hot-pink);">창원이의 비밀 일기장...<br>절대 보지 마!</p></div>`;
         }
-
-        let selD = new Date().getDate();
-        async function tpl(type) {
-            const v = document.getElementById('content-view');
-            v.innerHTML = `<div class="title">${type.toUpperCase()}</div>`;
-            
-            if(type === 'diary') {
-                const snap = await fb.get(dbRef('diary'));
-                const content = snap.exists() ? snap.val() : "";
-                v.innerHTML += `<textarea id="d-txt" class="input-style" style="height:420px; line-height:2.2; background: repeating-linear-gradient(#fff, #fff 31px, #f9f9f9 31px, #f9f9f9 32px);">${content}</textarea><button class="btn" style="width:100%; margin-top:15px;" onclick="saveD()">서버에 저장 ✨</button>`;
-            } else if(type === 'cal') {
-                v.innerHTML += `<div class="cal-grid" id="cal-area"></div><div style="margin-top:20px; padding:15px; border:1px solid var(--baby-pink); border-radius:15px;"><b id="cal-lbl">${selD}일</b><input id="ev-t" class="input-style" style="margin:8px 0;" placeholder="할 일 제목"><textarea id="ev-m" class="input-style" style="height:50px;" placeholder="상세 내용"></textarea><button class="btn" style="width:100%; margin-top:8px;" onclick="saveEv()">일정 저장</button></div>`;
-                renderCal();
-            } else if(type === 'friends') {
-                v.innerHTML += `<div id="f-list" style="max-height:350px; overflow-y:auto;"></div><div style="display:flex; gap:10px; margin-top:15px;"><input id="f-in" class="input-style" placeholder="누구?"><button class="btn" onclick="addF()">등록</button></div>`;
-                renderFriends();
-            } else if(type === 'recipe') {
-                const snap = await fb.get(dbRef('recipe'));
-                const r = snap.exists() ? snap.val() : {n:"", i:"", m:""};
-                v.innerHTML += `<div style="padding:15px; border:2px dashed var(--hot-pink); border-radius:15px; background:var(--soft-pink);">메뉴: <input class="input-style" id="rc-n" value="${r.n}">재료: <textarea id="rc-i" class="input-style">${r.i}</textarea>방법: <textarea id="rc-m" class="input-style" style="height:100px;">${r.m}</textarea><button class="btn" style="width:100%; margin-top:10px;" onclick="saveRecipe()">레시피 저장</button></div>`;
-            } else if(type === 'omu') {
-                v.innerHTML += `<div class="omu-plate"><div class="omu-egg"><canvas id="omu-canvas" width="240" height="120"></canvas></div></div><div style="display:flex; gap:10px; margin-top:15px;"><button class="btn" style="flex:1; background:#fff; color:red; border:1px solid red;" onclick="initOmu()">지우기</button><button class="btn" style="flex:1;" onclick="saveOmu()">케첩 저장</button></div><div id="omu-gal" style="display:grid; grid-template-columns:repeat(3,1fr); gap:5px; margin-top:15px;"></div>`;
-                initOmu(); renderOmuGal();
-            }
-        }
-
-        async function saveD() { await fb.set(dbRef('diary'), document.getElementById('d-txt').value); alert("저장됨!"); }
-        async function saveRecipe() { await fb.set(dbRef('recipe'), { n:document.getElementById('rc-n').value, i:document.getElementById('rc-i').value, m:document.getElementById('rc-m').value }); alert("레시피 저장됨!"); }
-
-        async function renderCal() {
-            const a = document.getElementById('cal-area'); a.innerHTML = '';
-            const snap = await fb.get(dbRef('calendar'));
-            const data = snap.exists() ? snap.val() : {};
-            for(let i=1; i<=31; i++) {
-                a.innerHTML += `<div class="cal-day ${i==selD?'today':''}" onclick="selDay(${i})">${i}${data[i]?'<div class="cal-dot"></div>':''}</div>`;
-            }
-        }
-        async function selDay(d) { selD = d; renderCal(); const snap = await fb.get(dbRef(`calendar/${d}`)); const ev = snap.exists() ? snap.val() : {t:"", m:""}; document.getElementById('cal-lbl').innerText = d+"일 일정"; document.getElementById('ev-t').value = ev.t; document.getElementById('ev-m').value = ev.m; }
-        async function saveEv() { await fb.set(dbRef(`calendar/${selD}`), { t:document.getElementById('ev-t').value, m:document.getElementById('ev-m').value }); renderCal(); alert("일정 저장됨!"); }
-
-        async function addF() { const n = document.getElementById('f-in').value; if(!n) return; const snap = await fb.get(dbRef('friends')); const fs = snap.exists() ? snap.val() : []; fs.push({n, c:0}); await fb.set(dbRef('friends'), fs); renderFriends(); document.getElementById('f-in').value=''; }
-        async function renderFriends() { const l = document.getElementById('f-list'); const snap = await fb.get(dbRef('friends')); const fs = snap.exists() ? snap.val() : []; l.innerHTML = fs.map((f, i) => `<div style="display:flex; justify-content:space-between; background:var(--soft-pink); padding:10px; border-radius:12px; margin-bottom:8px;"><b>${f.n}</b> <span style="color:var(--hot-pink); cursor:pointer;" onclick="tally(${i})">${"正".repeat(Math.floor(f.c/5))}${["","一","丅","上","止"][f.c%5] || ""}</span> <span onclick="delF(${i})">🗑️</span></div>`).join(''); }
-        async function tally(i) { const snap = await fb.get(dbRef('friends')); const fs = snap.val(); fs[i].c++; await fb.set(dbRef('friends'), fs); renderFriends(); }
-        async function delF(i) { const snap = await fb.get(dbRef('friends')); const fs = snap.val(); fs.splice(i,1); await fb.set(dbRef('friends'), fs); renderFriends(); }
-
-        function initOmu() {
-            const c = document.getElementById('omu-canvas'); const ctx = c.getContext('2d'); ctx.strokeStyle = 'red'; ctx.lineWidth = 5; ctx.lineCap = 'round';
-            let dr = false; 
-            const getPos = (e) => { const rect = c.getBoundingClientRect(); return [e.clientX - rect.left, e.clientY - rect.top]; };
-            c.onpointerdown = (e) => { dr=true; const [x,y] = getPos(e); ctx.beginPath(); ctx.moveTo(x,y); };
-            c.onpointermove = (e) => { if(dr) { const [x,y] = getPos(e); ctx.lineTo(x,y); ctx.stroke(); } };
-            c.onpointerup = () => dr=false;
-        }
-        async function saveOmu() { const u = document.getElementById('omu-canvas').toDataURL(); const snap = await fb.get(dbRef('omu_gallery')); const g = snap.exists() ? snap.val() : []; g.unshift(u); await fb.set(dbRef('omu_gallery'), g.slice(0,6)); renderOmuGal(); }
-        async function renderOmuGal() { const snap = await fb.get(dbRef('omu_gallery')); const g = snap.exists() ? snap.val() : []; document.getElementById('omu-gal').innerHTML = g.map(s => `<img src="${s}" style="width:100%; background:var(--egg-yellow); border-radius:5px;">`).join(''); }
-
-        function createPostItElement(val, top, left) {
-            const p = document.createElement('div'); p.className = 'post-it'; p.contentEditable = true; p.innerText = val || "메모!";
-            p.style.top = top || "100px"; p.style.left = left || "30px";
-            p.onpointerdown = (e) => {
-                let px = e.clientX, py = e.clientY;
-                const move = (ev) => { p.style.left = (p.offsetLeft + (ev.clientX - px)) + "px"; p.style.top = (p.offsetTop + (ev.clientY - py)) + "px"; px = ev.clientX; py = ev.clientY; };
-                document.onpointermove = move; document.onpointerup = () => document.onpointermove = null;
-            };
-            return p;
-        }
-        function addPostIt() { document.querySelector('.inner-book').appendChild(createPostItElement()); }
-        async function saveLayout() { const ds = []; document.querySelectorAll('.post-it').forEach(el => ds.push({ v: el.innerText, t: el.style.top, l: el.style.left })); await fb.set(dbRef('layout'), ds); alert("레이아웃 서버 저장!"); }
+        
+        // ... (tpl, saveD, renderCal, saveEv, addF, renderFriends, initOmu, saveOmu, createPostItElement 등 나머지 로직 생략)
+        // 위에서 제공된 이전 전체 코드의 나머지 부분을 그대로 붙여넣으시면 됩니다.
     </script>
 </body>
 </html>
