@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>창원이의 비밀일기 ✨</title>
+    <title> ✨ 태혁이의 비밀일기 ✨</title>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getDatabase, ref, set, get, child, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
@@ -75,7 +75,7 @@
         <div class="analog-cover">
             <div class="sticker" style="top:20px; left:-10px;">kirakira</div>
             <div class="sticker" style="bottom:40px; right:-10px; transform:rotate(10deg);">TOP SECRET</div>
-            <h1 style="color:white; font-size: 2.2rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">창원이의 비밀 일기</h1>
+            <h1 style="color:white; font-size: 2.2rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">태혁이의 비밀 일기</h1>
             <div class="pw-container">
                 <div class="heart-btn" onclick="document.getElementById('cover-pw').style.display='block'">💖</div>
                 <input type="password" id="cover-pw" class="lock-input" placeholder="Password?">
@@ -95,8 +95,8 @@
             </div>
             <div class="deco-txt" style="bottom:70px; left:20px; color:#ff1493; font-size:24px; transform:rotate(-5deg);">MOE MOE KYUN~!</div>
             <div class="deco-txt" style="bottom:30px; right:10px; color:var(--egg-yellow); font-size:45px;">🍓🍰</div>
-            <div class="deco-txt" style="top:100px; left:5px; color:red; font-size:14px; font-weight:bold;">#창원이가_직접_그림</div>
-            <p style="text-align:center; color:var(--hot-pink); font-weight:bold; margin-top:30px; font-size:18px;">손님이 늦으면 창원이가 다 먹음!!</p>
+            <div class="deco-txt" style="top:100px; left:5px; color:red; font-size:14px; font-weight:bold;">#태혁이가_직접_그림</div>
+            <p style="text-align:center; color:var(--hot-pink); font-weight:bold; margin-top:30px; font-size:18px;">손님이 늦으면 태혁이가 다 먹음!!</p>
         </div>
     </div>
 
@@ -111,8 +111,8 @@
                         <input type="file" id="pf-upload" hidden onchange="changePf(event)">
                     </div>
                     <div style="margin-top:10px;">
-                        <h2 id="n-disp" style="margin:0; color:var(--hot-pink);">창원</h2>
-                        <input id="n-edit" class="input-style" style="display:none; text-align:center;" value="창원">
+                        <h2 id="n-disp" style="margin:0; color:var(--hot-pink);">태혁</h2>
+                        <input id="n-edit" class="input-style" style="display:none; text-align:center;" value="태혁">
                         <p id="m-disp" style="color:#888; margin:5px 0;">"오늘도 평화로운 하루~ ✨"</p>
                         <input id="m-edit" class="input-style" style="display:none; text-align:center;" value="오늘도 평화로운 하루~ ✨">
                         <button class="btn" id="pf-btn" onclick="togglePf()" style="font-size:11px;">수정</button>
@@ -155,7 +155,7 @@
             if(snap.exists()){
                 const d = snap.val();
                 if(d.profile) {
-                    document.getElementById('n-disp').innerText = d.profile.name || "창원";
+                    document.getElementById('n-disp').innerText = d.profile.name || "태혁";
                     document.getElementById('m-disp').innerText = d.profile.msg || "오늘도 평화로운 하루~ ✨";
                     if(d.profile.img) document.getElementById('pf-img').src = d.profile.img;
                 }
